@@ -14,3 +14,23 @@ dependencies = [
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.16.3,<0.17.0)"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src"]
+extend-exclude = [".venv", "venv", "build", "dist", "__pycache__", "migrations"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+docstring-code-format = true
