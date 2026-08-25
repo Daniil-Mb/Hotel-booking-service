@@ -32,3 +32,9 @@ class BookingSerializer(serializers.ModelSerializer):
             "id",
             "created_at",
         ]
+
+    def validate(self, data):
+        if data["end_date"] <= data["start_date"]:
+            raise serializers.ValidationError("end_date must be after start_date")
+
+        return data
