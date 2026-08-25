@@ -1,6 +1,10 @@
+import logging
+
 from rest_framework import serializers
 
 from .models import Booking, Room
+
+logger = logging.getLogger(__name__)
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -48,6 +52,12 @@ class BookingSerializer(serializers.ModelSerializer):
         )
 
         if overlapping_bookings.exists():
+            logger.warning(
+                "Booking rejected: room_id=%s start_date=%s end_date=%s",
+                room.id,
+                start_date,
+                end_date,
+            )
             raise serializers.ValidationError(f"Room #{room.id} is already booked for these dates.")
 
         return data

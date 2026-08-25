@@ -1,9 +1,13 @@
+import logging
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, mixins, status, viewsets
 from rest_framework.response import Response
 
 from .models import Booking, Room
 from .serializers import BookingSerializer, RoomSerializer
+
+logger = logging.getLogger(__name__)
 
 
 class BaseCreateListDestroyViewSet(
@@ -18,6 +22,12 @@ class BaseCreateListDestroyViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
+
+        logger.info(
+            "%s created: id=%s",
+            serializer.instance.__class__.__name__,
+            serializer.instance.id,
+        )
 
         return Response(
             {self.response_id_field: serializer.instance.id},
