@@ -214,4 +214,5 @@ logs/
 /staticfiles/
 /media/
 .vscode/
+.git/
 

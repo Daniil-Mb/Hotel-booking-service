@@ -26,7 +26,9 @@ dev = [
     "typing-extensions (>=4.16.0,<5.0.0)",
     "bandit (>=1.9.4,<2.0.0)",
     "radon (>=6.0.1,<7.0.0)",
-    "pre-commit (>=4.6.2,<5.0.0)"
+    "pre-commit (>=4.6.2,<5.0.0)",
+    "pytest (>=9.1.1,<10.0.0)",
+    "pytest-django (>=4.14.0,<5.0.0)"
 ]
 
 [tool.ruff]
@@ -51,6 +53,7 @@ warn_unused_configs = true
 check_untyped_defs = true
 disallow_incomplete_defs = true
 no_implicit_optional = true
+explicit_package_bases = true
 
 [[tool.mypy.overrides]]
 module = "*.migrations.*"
@@ -59,3 +62,8 @@ ignore_errors = true
 [tool.bandit]
 exclude = [".venv", "venv", "build", "dist", "__pycache__", "migrations", "tests"]
 skips = ["B101", "B311"]  
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "hotel_booking.settings"
+pythonpath = ["src/hotel_booking"]
+python_files = ["tests.py", "test_*.py", "*_tests.py"]

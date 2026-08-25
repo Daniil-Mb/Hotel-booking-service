@@ -26,7 +26,9 @@ help:
 	@echo "  hal       - Radon Hal (метрика халстеда)"
 	@echo "  raw       - Radon Raw (SLOC, LLOC, комментарии)"
 	@echo "  check     - Быстрый локальный quality gate (все проверки)"
+	@echo "  test      - Pytest (запуск тестов)"
 	@echo "  clean     - Очистка кэша и временных файлов"
+
 
 # ===============================
 # Установка зависимостей
@@ -115,3 +117,10 @@ clean:
 	@find . -type d -name ".mypy_cache" -exec rm -rf {} + 2>/dev/null || true
 	@find . -type d -name ".ruff_cache" -exec rm -rf {} + 2>/dev/null || true
 	@echo "Очистка завершена"
+
+# ===============================
+# Pytest: тесты
+# ===============================
+
+test:
+	poetry run pytest
