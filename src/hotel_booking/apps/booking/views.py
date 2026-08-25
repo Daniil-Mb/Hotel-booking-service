@@ -1,4 +1,4 @@
-from rest_framework import mixins, status, viewsets
+from rest_framework import filters, mixins, status, viewsets
 from rest_framework.response import Response
 
 from .models import Booking, Room
@@ -27,6 +27,9 @@ class BaseCreateListDestroyViewSet(
 class RoomViewSet(BaseCreateListDestroyViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ["price_per_night", "created_at"]
+    ordering = ["-created_at"]
 
 
 class BookingViewSet(BaseCreateListDestroyViewSet):
