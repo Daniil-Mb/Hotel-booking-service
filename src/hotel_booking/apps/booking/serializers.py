@@ -34,7 +34,20 @@ class BookingSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
-        if data["end_date"] <= data["start_date"]:
-            raise serializers.ValidationError("end_date must be after start_date")
+        start_date = data["start_date"]
+        end_date = data["end_date"]
+        room = data["room"]
+
+        if end_date <= start_date:
+            raise serializers.ValidationError("end_date must be after start_date.")
+
+        overlapping_bookings = Booking.objects.filter(
+            room=room,
+            start_date__lt=end_date,
+            end_date__gt=start_date,
+        )
+
+        if overlapping_bookings.exists():
+            raise serializers.ValidationError(f"Room #{room.id} is already booked for these dates.")
 
         return data
